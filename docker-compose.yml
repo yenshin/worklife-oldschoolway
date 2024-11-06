@@ -14,6 +14,7 @@ services:
       - technical-backend
     ports:
       - "8080:80"
+      - "5678:5678"
     env_file:
       - app.env
       - .env
@@ -22,16 +23,20 @@ services:
     working_dir: /wl
     volumes:
       - ./app:/wl/app
+    
     command: [
-        "uvicorn",
-        "--host", "0.0.0.0",
-        "--port", "80",
-        "--reload-dir", "/wl/app",
-        "--log-level", "debug",
-        "--reload",
-        "app.main:app",
-    ]
-
+          "python3",   
+          "-m", "debugpy",
+          "--wait-for-client",
+          "--listen", "0.0.0.0:5678",        
+          "-m", "uvicorn",
+          "--host", "0.0.0.0",
+          "--port", "80",
+          "--reload-dir", "/wl/app",
+          "--log-level", "debug",
+          "--reload",
+          "app.main:app"
+      ]
   worklife-test-db:
     container_name: worklife-test-db
     image: postgres:16

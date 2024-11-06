@@ -7,4 +7,9 @@ app.env
 		git update-index --assume-unchanged ${file} # to hide file
 		git update-index --no-assume-unchanged ${file} # to show back the file
 		
+library added:
+	- debugpy
+		allow me to debug with vscode debugger
+		don't forget to docker-compose up -d --build
+note: work with python 3.11
 	

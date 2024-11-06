@@ -15,3 +15,4 @@ RUN poetry config virtualenvs.create false \
 
 ENV PATH=/root/.local/bin:$PATH
 EXPOSE 80
+EXPOSE 5678
