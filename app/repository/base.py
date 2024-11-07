@@ -22,7 +22,7 @@ class BaseRepository:
     # certainly need to be discussed 
     def pushlog(self, session, type:LogType, msg:str, additionnalInfo:str):
         succeed = False
-        log = Logger.GenerateLog(type, str, additionnalInfo)
+        log = Logger.GenerateLog(type, msg, additionnalInfo)
         try:
             # INFO: uuid1 is not fully random and use timestand and host id
             # convenient for logs other things like that
@@ -32,9 +32,11 @@ class BaseRepository:
             succeed = True
         except Exception as e:
             session.rollback()
+            additionnalInfo:str = str(e)
+            additionnalInfo += "\n" + log.ToString()
             # log in stdout, with time I should log in file, with the possibility of
             # pushing them in the db            
-            logErrL = Logger.GenerateLog(LogType.ERROR, "can't pushlog", log.ToString())
+            logErrL = Logger.GenerateLog(LogType.ERROR, "can't pushlog", additionnalInfo)
             pprint(logErrL)
         finally:
             session.close()
@@ -43,7 +45,8 @@ class BaseRepository:
     def create(self, session, obj_in):
         succeed = False
         try:
-            obj_in.external_id = uid.uuid4()
+            if (obj_in.external_id == None):
+                obj_in.external_id = uid.uuid4()
             session.add(obj_in)
             session.commit()
             succeed = True
@@ -51,7 +54,7 @@ class BaseRepository:
             session.rollback()
             additionnalInfo:str = str(e)
             additionnalInfo += "\n" + obj_in.ToString()
-            self.pushlog(session, LogType.ERROR, "create failed", additionnalInfo)            
+            self.pushlog(session, LogType.ERROR.value, "create failed", additionnalInfo)            
         finally:
             session.close()
             return succeed

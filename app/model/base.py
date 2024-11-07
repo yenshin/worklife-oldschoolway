@@ -12,6 +12,8 @@ class CustomUUID(postgresql.UUID):
 
 @as_declarative()
 class BaseModel:
+    # INFO: we use internal id for fast DB lookup and 
+    # external id is when the system is distributed
     internal_id = Column(postgresql.INTEGER, primary_key = True, unique = True, index = True)
     external_id = Column(CustomUUID(as_uuid=True), index=True, default=uid.uuid4)
 

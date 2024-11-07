@@ -41,13 +41,13 @@ CREATE INDEX idx_team_name ON employee_team (team_name);
 ALTER TABLE employee ADD CONSTRAINT FK_employee_team_id FOREIGN KEY (team_id) REFERENCES employee_team(internal_id);
 
 -- employee vacation --
-CREATE TYPE VacationType AS ENUM ('UnpaidLeave', 'PaidLeave');
+CREATE TYPE vacationtype AS ENUM ('UnpaidLeave', 'PaidLeave');
 CREATE TABLE employee_vacation
 (
     internal_id integer primary key generated always as identity,
 	external_id UUID NOT NULL UNIQUE,
 	user_id integer NOT NULL,
-    vacation_type VacationType,
+    vacation_type vacationtype,
     start_date DATE,
 	end_date DATE
 );
@@ -62,12 +62,12 @@ CREATE INDEX idx_end_date ON employee_vacation (end_date);
 ALTER TABLE employee_vacation ADD CONSTRAINT FK_employee_vacation_user_id FOREIGN KEY (user_id) REFERENCES employee(internal_id);
 
 -- logs --
-CREATE TYPE LogType AS ENUM ('DEBUG', 'INFO', 'WARNING', 'ERROR');
+CREATE TYPE logtype AS ENUM ('DEBUG', 'INFO', 'WARNING', 'ERROR');
 CREATE TABLE logs
 (
     internal_id integer primary key generated always as identity,
 	external_id UUID NOT NULL UNIQUE,
-	log_type LogType NOT NULL,
+	log_type logtype NOT NULL,
     prefix TEXT,
     msg TEXT,
 	additionnal_info TEXT

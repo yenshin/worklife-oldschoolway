@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Enum
+from sqlalchemy import Column
 from sqlalchemy.dialects import postgresql as pgs
 from .base import BaseModel, LogType
 
@@ -6,8 +6,8 @@ from .base import BaseModel, LogType
 # imo logs should be not permenant.
 # it's debatable depending of the use cae
 class LogModel(BaseModel):
-    __tablename__ = "employee"
-    log_type = Column(Enum(LogType), index=True)
+    __tablename__ = "logs"
+    log_type = Column(pgs.ENUM(LogType, name="LogType", create_type=False), index=True)
     prefix = Column(pgs.TEXT)
     msg = Column(pgs.TEXT)
     additionnal_info = Column(pgs.TEXT)

@@ -1,1 +1,1 @@
-pip install fastapi fastapi_utils pydantic sqlalchemy-orm alembic poetry debugpy
+pip install fastapi fastapi_utils pydantic sqlalchemy-orm alembic poetry debugpy pytest requests
