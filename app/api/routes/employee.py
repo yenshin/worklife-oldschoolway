@@ -15,5 +15,9 @@ router = APIRouter()
 
 
 @router.get("/{employee_id}", response_model=Optional[EmployeeBase])
-def get_employee(session: Session = Depends(get_db), *, employee_id: UUID):
-    return EmployeeRepository.get(session=session, id=employee_id)
+def get_employee(employee_id: UUID, session: Session = Depends(get_db)):
+    return EmployeeRepository.get_by_external_id(session=session, external_id=employee_id)
+
+@router.put("/", response_model=Optional[EmployeeBase])
+def add_employee(email:str, first_name:str, last_name:str, session: Session = Depends(get_db)):
+    return EmployeeRepository.add_employee(session, email, first_name, last_name)

@@ -11,5 +11,9 @@ library added:
 	- debugpy
 		allow me to debug with vscode debugger
 		don't forget to docker-compose up -d --build
+
+I try to follow this recommendation:
+	https://wiki.postgresql.org/wiki/Don't_Do_This
+	
 note: work with python 3.11
 	
