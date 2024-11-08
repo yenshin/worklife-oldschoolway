@@ -8,15 +8,21 @@ class BaseRepository:
     def __init__(self, model):
         self.model = model
 
-    def _query(self, session, *_, **kwargs):
-        filters = [getattr(self.model, k) == v for k, v in kwargs.items()]
-        return session.query(self.model).filter(*filters)
-
-    def get(self, session, *_, **kwargs):
-        return self._query(session, **kwargs).one_or_none()
-
-    def get_many(self, session, *_, **kwargs):
-        return self._query(session, **kwargs).all()
+    def get_one(self, session, table, external_id):
+        toReturn = None
+        try:
+            toReturn = session.query(table). \
+                filter_by(external_id=external_id).\
+                first()
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            additionnalInfo:str = str(e)
+            additionnalInfo += "\n" + external_id
+            self.pushlog(session, LogType.ERROR.value, "get_one failed", additionnalInfo)            
+        finally:
+            session.close()
+            return toReturn
 
     # INFO: This certainly not the best place for this fonction
     # certainly need to be discussed 
