@@ -31,11 +31,11 @@ def __checkResponse(session: Session, response: Response, representation : Emplo
     return representation
         
 
-@router.get("/{external_id}", response_model=Optional[EmployeeTeamBase], status_code=200)
-def get_team(external_id: UUID, response: Response, session: Session = Depends(get_db)):
+@router.get("/{id}", response_model=Optional[EmployeeTeamBase], status_code=200)
+def get_team(id: UUID, response: Response, session: Session = Depends(get_db)):
     # # INFO: no oneliner to be benefit from VSCode remote debugger
     # INFO: no oneliner to be benefit from VSCode remote debugger
-    representation = EmployeeTeamRepository.get_team(session, external_id)
+    representation = EmployeeTeamRepository.get_team(session, id)
     representation = __checkResponse(session, response, representation)
     return representation
 

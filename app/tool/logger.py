@@ -44,7 +44,7 @@ class Logger:
         try:
             # INFO: uuid1 is not fully random and use timestand and host id
             # convenient for logs other things like that
-            log.external_id = uid.uuid1()            
+            log.id = uid.uuid1()            
             session.add(log)
             session.commit()
             succeed = True

@@ -32,15 +32,22 @@ def __checkResponse(session: Session, response: Response, representation : Emplo
         
     
 
-@router.get("/{external_id}", response_model=Optional[EmployeeBase], status_code=200)
-def get_employee(external_id: UUID, response: Response, session: Session = Depends(get_db)):
+@router.get("/{id}", response_model=Optional[EmployeeBase], status_code=200)
+def get_employee(id: UUID, response: Response, session: Session = Depends(get_db)):
     # INFO: no oneliner to be benefit from VSCode remote debugger
-    representation = EmployeeRepository.get_employee(session, external_id)
+    representation = EmployeeRepository.get_employee(session, id)
     representation = __checkResponse(session, response, representation)
     return representation
 
 @router.put("/", response_model=Optional[EmployeeBase], status_code=201)
-def add_employee(employee:EmployeeBase, response: Response, session: Session = Depends(get_db)):
+def add_team(employee:EmployeeBase, response: Response, session: Session = Depends(get_db)):
     representation = EmployeeRepository.add_employee(session, employee)
+    representation = __checkResponse(session, response, representation)
+    return representation
+
+@router.get("/{id}", response_model=Optional[EmployeeBase], status_code=200)
+def get_employee(id: UUID, response: Response, session: Session = Depends(get_db)):
+    # INFO: no oneliner to be benefit from VSCode remote debugger
+    representation = EmployeeRepository.get_employee(session, id)
     representation = __checkResponse(session, response, representation)
     return representation

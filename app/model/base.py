@@ -14,13 +14,11 @@ class CustomUUID(postgresql.UUID):
 class BaseModel:
     # INFO: we use internal id for fast DB lookup and 
     # external id is when the system is distributed
-    internal_id = Column(postgresql.INTEGER, primary_key = True, unique = True, index = True)
-    external_id = Column(CustomUUID(as_uuid=True), index=True, default=uid.uuid4)
+    id = Column(CustomUUID(as_uuid=True), primary_key = True, index=True, default=uid.uuid4)
 
     def ToDict(self):
         return {
-            "internal_id" : self.internal_id,
-            "external_id" : self.external_id              
+            "id" : self.id              
         }
     
     def ToString(self):
