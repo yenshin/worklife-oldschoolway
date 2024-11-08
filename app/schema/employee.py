@@ -1,10 +1,7 @@
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Optional
-from uuid import UUID
+from pydantic import Field
+from .base import BaseRepresentation
 
-class EmployeeBase(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-    external_id: Optional[UUID] = Field(None, description="the id to communicate from the client. can be set by the client")
+class EmployeeBase(BaseRepresentation):
     email: str = Field("xxx@xxx.com", description="")
     first_name: str = Field("John", description="")
     last_name: str = Field("Doe", description="")

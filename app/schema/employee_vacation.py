@@ -1,10 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import Field
+from .base import BaseRepresentation
 
-
-class EmployeeVacationBase(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-    external_id: str
-    employee_id: str
-    vacation_type: str
-    start_data: str
-    end_data: str
+class EmployeeVacationBase(BaseRepresentation):
+    vacation_type: str = Field("vacation type", description="can be paid or not")
+    start_data: str = Field("start data", description="")
+    end_data: str = Field("start data", description="")

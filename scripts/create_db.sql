@@ -62,7 +62,7 @@ CREATE INDEX idx_end_date ON employee_vacation (end_date);
 ALTER TABLE employee_vacation ADD CONSTRAINT FK_employee_vacation_user_id FOREIGN KEY (user_id) REFERENCES employee(internal_id);
 
 -- logs --
-CREATE TYPE logtype AS ENUM ('DEBUG', 'INFO', 'WARNING', 'ERROR');
+CREATE TYPE logtype AS ENUM ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICALSECURITY');
 CREATE TABLE logs
 (
     internal_id integer primary key generated always as identity,

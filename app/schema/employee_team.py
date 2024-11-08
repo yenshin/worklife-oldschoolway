@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import Field
+from .base import BaseRepresentation
 
-
-class EmployeeTeamBase(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-    external_id: str
-    team_name: str
+class EmployeeTeamBase(BaseRepresentation):
+    team_name: str = Field("coffee", description="")
