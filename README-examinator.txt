@@ -1,4 +1,6 @@
-# note for worklife examinator
+# a full rework as been done here : https://github.com/yenshin/worklife-modern-python
+
+# note for worklife examinator 
 app.env 
 	I remove the credential data to not have it in git
 	(test system is often use as an entry point for malicious person)
